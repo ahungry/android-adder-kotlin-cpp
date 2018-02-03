@@ -2,7 +2,9 @@ package com.ahungry.blub
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,6 +32,8 @@ class MainActivity : AppCompatActivity() {
         val computed: String = addOne(edit.getText().toString().trim().toInt())
         sample_text.setText("Updated")
         edit.setText(computed)
+        toast("Howdy doodie")
+        Toast.makeText(this@MainActivity, "ButtonClicked!", Toast.LENGTH_LONG).show()
       }
       //Toast.makeText(this@MainActivity, "Button 1", Toast.LENGTH_LONG).show()
     }
