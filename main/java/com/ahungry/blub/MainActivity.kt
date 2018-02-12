@@ -12,38 +12,21 @@ import org.jetbrains.anko.toast
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.uiThread
 import com.github.kittinunf.fuel.*
+import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-data class IPAddressJsonResponse (val origin: String) {
-  // override fun toString(): String {
-  //   return "Your IP was: $origin"
-  // }
+data class IPAddress (val origin: String = "") {
+  override fun toString (): String {
+    return "Your IP: ${origin}"
+  }
+
+  class Deserializer : ResponseDeserializable<IPAddress> {
+    override fun deserialize(content: String) = Gson().fromJson(content, IPAddress::class.java)
+  }
 }
 
 class MainActivity : AppCompatActivity() {
-
-  // fun request (view: View) {
-  //   Fuel.get("http://httpbin.org/get").responseString { request, response, result ->
-  //     //do something with response
-  //     result.fold({ d ->
-  //       //do something with data
-  //       // uiThread {
-  //         //   toast("Fetched some stuff...")
-  //         // }
-  //         this@MainActivity.runOnUiThread(java.lang.Runnable {
-  //           Toast.makeText(this@MainActivity, d.toString(), Toast.LENGTH_LONG).show()
-  //         })
-  //         },
-  //         { err ->
-  //           this@MainActivity.runOnUiThread(java.lang.Runnable {
-  //             Toast.makeText(this@MainActivity, err.toString(), Toast.LENGTH_LONG).show()
-  //             })
-  //             //do something with error
-  //           })
-  //   }
-  // }
-
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
@@ -70,7 +53,26 @@ class MainActivity : AppCompatActivity() {
             edit.setText(computed)
             toast("Fetch that ip....")
 
+            // Try doing it async with Fuel
+            doAsync {
+              "https://httpbin.org/ip".httpGet().responseObject (IPAddress.Deserializer()) { request, response, result ->
+                // Result is of type Result<IPAddress, Exception>
+                // Log.d("Request", result.toString())
+                val (ipaddr, err) = result
+
+                uiThread {
+                  if (null != ipaddr) {
+                    longToast("Req performed")
+                    // sample_text.setText(ipaddr.origin)
+                    sample_text.setText(ipaddr.toString())
+                  }
+                }
+              }
+            }
+
             // https://antonioleiva.com/api-request-kotlin/
+            // Neat, doing it async worked
+            /*
             doAsync {
               val result = URL("https://httpbin.org/ip").readText()
               uiThread {
@@ -80,14 +82,16 @@ class MainActivity : AppCompatActivity() {
 
                 val attrs = Gson().fromJson(
                     jsonString,
-                    IPAddressJsonResponse::class.java
+                    IPAddress::class.java
                 )
                 Log.d("Attrs", attrs.origin)
                 sample_text.setText(attrs.origin)
               }
             }
-            // request(findViewById(R.layout.activity_main))
-            // Toast.makeText(this@MainActivity, "Toast time.", Toast.LENGTH_LONG).show()
+
+            request(findViewById(R.layout.activity_main))
+            Toast.makeText(this@MainActivity, "Toast time.", Toast.LENGTH_LONG).show()
+            */
           }
           //Toast.makeText(this@MainActivity, "Button 1", Toast.LENGTH_LONG).show()
         }
