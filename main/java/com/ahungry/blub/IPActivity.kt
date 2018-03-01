@@ -36,6 +36,9 @@ class IPActivityUI(val msg: CharSequence) : AnkoComponent<IPActivity> {
         text = msg
         textSize = 24f
       }
+      button("Back") {
+        onClick { startActivity<MainActivity>() }
+      }
     }
   }
 }

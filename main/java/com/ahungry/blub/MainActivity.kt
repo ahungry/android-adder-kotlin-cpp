@@ -40,7 +40,8 @@ class MainActivity : AppCompatActivity() {
               if (null != ipaddr) {
                 longToast(ipaddr.toString())
                 // startActivity<MainActivity>()
-                startActivity<BlubActivity>()
+                // startActivity<BlubActivity>()
+                startActivity<IPActivity>("ip" to ipaddr.toString())
                 // startActivity(Intent(this@MainActivity, IPActivity::class.java))
                 // sample_text.setText(ipaddr.toString())
               }
@@ -80,8 +81,7 @@ class MainActivity : AppCompatActivity() {
           button("Say Hello") {
             textSize = 26f
             onClick {
-              startActivity<IPActivity>("ip" to "123")
-              // ui.owner.getIp(ui)
+              ui.owner.getIp(ui)
             }
           }
         }
