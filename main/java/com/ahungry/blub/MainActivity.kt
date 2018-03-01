@@ -2,6 +2,7 @@ package com.ahungry.blub
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.content.Intent
 import android.widget.Toast
 import android.view.View
 import android.util.Log
@@ -26,55 +27,59 @@ class MainActivity : AppCompatActivity() {
     MainActivityUI().setContentView(this)
   }
 
-  /**
-  * A native method that is implemented by the 'native-lib' native library,
-  * which is packaged with this application.
-  */
-  external fun stringFromJNI(): String
-  external fun addOne(y: Int): String
+  fun getIp(ui: AnkoContext<MainActivity>) {
+    ui.doAsync {
+      "https://httpbin.org/ip".httpGet()
+          .responseObject (IPAddress.Deserializer()) { request, response, result ->
+            // Result is of type Result<IPAddress, Exception>
+            Log.d("Request", result.toString())
+            val (ipaddr, err) = result
 
-  companion object {
-    // Used to load the 'native-lib' library on application startup.
-    init {
-      System.loadLibrary("native-lib")
-    }
-  }
-}
-
-class MainActivityUI : AnkoComponent<MainActivity> {
-  override fun createView(ui: AnkoContext<MainActivity>) = with(ui) {
-    verticalLayout {
-      padding = dip(30)
-      val sample_text = textView {
-        text = "Hello there."
-        textSize = 24f
-      }
-      val name = editText {
-        hint = "Name"
-        textSize = 24f
-      }
-      // val name = editText()
-      button("Say Hello") {
-        textSize = 26f
-        onClick {
-          doAsync {
-            "https://httpbin.org/ip".httpGet()
-                .responseObject (IPAddress.Deserializer()) { request, response, result ->
-                  // Result is of type Result<IPAddress, Exception>
-                  Log.d("Request", result.toString())
-                  val (ipaddr, err) = result
-
-                  uiThread {
-                    if (null != ipaddr) {
-                      longToast("Req performed")
-                      // sample_text.setText(ipaddr.origin)
-                      sample_text.setText(ipaddr.toString())
-                    }
-                  }
-                }
+            uiThread {
+            // activityUiThreadWithContext {
+              if (null != ipaddr) {
+                longToast(ipaddr.toString())
+                // startActivity<MainActivity>()
+                startActivity<IPActivity>()
+                // startActivity(Intent(this@MainActivity, IPActivity::class.java))
+                // sample_text.setText(ipaddr.toString())
               }
-              // toast("Hello, ${name.text}!")
             }
+          }
+        }
+      }
+
+      /**
+      * A native method that is implemented by the 'native-lib' native library,
+      * which is packaged with this application.
+      */
+      external fun stringFromJNI(): String
+      external fun addOne(y: Int): String
+
+      companion object {
+        // Used to load the 'native-lib' library on application startup.
+        init {
+          System.loadLibrary("native-lib")
+        }
+      }
+    }
+
+    class MainActivityUI : AnkoComponent<MainActivity> {
+      override fun createView(ui: AnkoContext<MainActivity>) = with(ui) {
+        verticalLayout {
+          padding = dip(30)
+          val sample_text = textView {
+            text = "Hello there."
+            textSize = 24f
+          }
+          val name = editText {
+            hint = "Name"
+            textSize = 24f
+          }
+          // val name = editText()
+          button("Say Hello") {
+            textSize = 26f
+            onClick { ui.owner.getIp(ui) }
           }
         }
       }
