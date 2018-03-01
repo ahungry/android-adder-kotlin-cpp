@@ -35,12 +35,12 @@ class MainActivity : AppCompatActivity() {
             Log.d("Request", result.toString())
             val (ipaddr, err) = result
 
-            uiThread {
-            // activityUiThreadWithContext {
+            //uiThread {
+            activityUiThreadWithContext {
               if (null != ipaddr) {
                 longToast(ipaddr.toString())
                 // startActivity<MainActivity>()
-                startActivity<IPActivity>()
+                startActivity<BlubActivity>()
                 // startActivity(Intent(this@MainActivity, IPActivity::class.java))
                 // sample_text.setText(ipaddr.toString())
               }
@@ -79,7 +79,10 @@ class MainActivity : AppCompatActivity() {
           // val name = editText()
           button("Say Hello") {
             textSize = 26f
-            onClick { ui.owner.getIp(ui) }
+            onClick {
+              startActivity<IPActivity>("ip" to "123")
+              // ui.owner.getIp(ui)
+            }
           }
         }
       }

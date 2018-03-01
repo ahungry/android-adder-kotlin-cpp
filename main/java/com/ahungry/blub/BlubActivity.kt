@@ -1,12 +1,10 @@
 package com.ahungry.blub
 
-import android.support.v7.app.AppCompatActivity
+import android.app.ListActivity
 import android.os.Bundle
 import android.widget.Toast
 import android.view.View
 import android.util.Log
-import kotlinx.android.synthetic.main.activity_main.*
-import java.net.URL
 import org.jetbrains.anko.*
 import org.jetbrains.anko.custom.ankoView
 import org.jetbrains.anko.sdk25.coroutines.*
@@ -19,23 +17,31 @@ import com.github.kittinunf.fuel.*
 import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import android.widget.ArrayAdapter
+import android.widget.SimpleAdapter
 
-class IPActivity : AppCompatActivity() {
+class BlubActivity : ListActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    val extras = getIntent().getExtras()
-    IPActivityUI(extras.getString("ip")).setContentView(this)
+    // BlubActivityUI().setContentView(this)
+
+    val items = listOf(
+        "USA" to "United States",
+        "CAN" to "Canada"
+    )
+
+    listAdapter = ArrayAdapter(this, 0, items)
   }
 }
 
-class IPActivityUI(val msg: CharSequence) : AnkoComponent<IPActivity> {
-  override fun createView(ui: AnkoContext<IPActivity>) = with(ui) {
-    verticalLayout {
-      padding = dip(30)
-      val xsample_text = textView {
-        text = msg
-        textSize = 24f
-      }
-    }
-  }
-}
+// class BlubActivityUI : AnkoComponent<BlubActivity> {
+//   override fun createView(ui: AnkoContext<BlubActivity>) = with(ui) {
+//     verticalLayout {
+//       padding = dip(30)
+//       val xsample_text = textView {
+//         text = "Got your ip"
+//         textSize = 24f
+//       }
+//     }
+//   }
+// }
