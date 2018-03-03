@@ -20,6 +20,7 @@ import com.github.kittinunf.fuel.*
 import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import android.os.Parcelable
 
 class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +42,14 @@ class MainActivity : AppCompatActivity() {
                 longToast(ipaddr.toString())
                 // startActivity<MainActivity>()
 
-                startActivity<BlubActivity>()
+                /*
+                val items: ArrayList<Parcelable> = listOf(Item(), Item())
+                val i = Intent(this@MainActivity, BlubActivity::class.java)
+                i.putParcelableArrayListExtra("extraextra", items)
+                startActivity(i)
+                */
+
+                // startActivity<BlubActivity>()
                 // startActivity<IPActivity>("ip" to ipaddr.toString())
 
                 // startActivity(Intent(this@MainActivity, IPActivity::class.java))

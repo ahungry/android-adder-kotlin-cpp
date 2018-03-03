@@ -25,13 +25,15 @@ import android.view.Gravity
 import org.example.ankodemo.util.ListItem
 import org.example.ankodemo.util.ListItemAdapter
 import org.example.ankodemo.util.TextListItem
+import android.os.Parcelable
 
 class BlubActivity : ListActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
+    val eqItems = this.intent.getParcelableArrayListExtra<Parcelable>("extraextra")
     val items = listOf(
-        "America" to listOf("Brazil", "Canada", "United States"),
+        "America" to listOf("This is some really long text, I wonder if it will work, hmmm it could be an acution even....", "Canada", "United States"),
         "Asia" to listOf("China", "India", "Japan"),
         "Europe" to listOf("France", "Germany", "Spain", "United Kingdom")
     )
