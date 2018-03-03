@@ -31,7 +31,7 @@ class BlubActivity : ListActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    val eqItems = this.intent.getParcelableArrayListExtra<Parcelable>("extraextra")
+    // val eqItems = this.intent.getParcelableArrayListExtra<Parcelable>("extraextra")
     val items = listOf(
         "America" to listOf("This is some really long text, I wonder if it will work, hmmm it could be an acution even....", "Canada", "United States"),
         "Asia" to listOf("China", "India", "Japan"),

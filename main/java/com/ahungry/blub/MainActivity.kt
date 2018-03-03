@@ -42,12 +42,14 @@ class MainActivity : AppCompatActivity() {
                 longToast(ipaddr.toString())
                 // startActivity<MainActivity>()
 
+                val items = arrayListOf<Parcelable>(Item(), Item())
+
                 /*
-                val items: ArrayList<Parcelable> = listOf(Item(), Item())
                 val i = Intent(this@MainActivity, BlubActivity::class.java)
                 i.putParcelableArrayListExtra("extraextra", items)
                 startActivity(i)
                 */
+                startActivity<BlubActivity>()
 
                 // startActivity<BlubActivity>()
                 // startActivity<IPActivity>("ip" to ipaddr.toString())
