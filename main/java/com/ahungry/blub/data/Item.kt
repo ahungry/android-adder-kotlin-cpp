@@ -71,7 +71,14 @@ data class Item (
     return "Listing: ${listing}"
   }
 
-  class Deserializer : ResponseDeserializable<Item> {
-    override fun deserialize(content: String) = Gson().fromJson(content, Item::class.java)
+  /*
+  class ListDeserializer : ResponseDeserializable<List<LoremModel>> {
+    override fun deserialize(content: String) = Gson().fromJson<List<LoremModel>>(content, object : TypeToken<List<LoremModel>>() {}.type)
+  }
+  */
+
+  class ListDeserializer : ResponseDeserializable<List<Item>> {
+    // override fun deserialize(content: String) = Gson().fromJson(content, Item::class.java)
+    override fun deserialize(content: String) = Gson().fromJson<List<Item>>(content, object : TypeToken<List<Item>>() {}.type)
   }
 }
