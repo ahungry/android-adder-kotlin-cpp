@@ -21,9 +21,9 @@ data class X (
 @Parcelize
 data class Item (
     val timeAgo: String = "",
-    val id: Int = 0,
+    val id: Long = 0,
     val seller: String = "",
-    val date: Int = 0,
+    val date: Long = 0,
     val listing: String = ""
 ) : Parcelable {
   /*

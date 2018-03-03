@@ -30,16 +30,19 @@ class MainActivity : AppCompatActivity() {
 
   fun getIp(ui: AnkoContext<MainActivity>) {
     ui.doAsync {
-      "https://httpbin.org/ip".httpGet()
-          .responseObject (IPAddress.Deserializer()) { request, response, result ->
+      // "https://httpbin.org/ip".httpGet()
+      "http://ahungry.com/api/eq/get-item-listings/wts.json".httpGet()
+          .responseObject (Item.ListDeserializer()) { request, response, result ->
             // Result is of type Result<IPAddress, Exception>
-            Log.d("Request", result.toString())
-            val (ipaddr, err) = result
+            // Log.d("Request", result.toString())
+            // val (ipaddr, err) = result
+            val (items, err) = result
 
             //uiThread {
             activityUiThreadWithContext {
-              if (null != ipaddr) {
-                longToast(ipaddr.toString())
+              if (null != items) {
+                longToast("Got em")
+                // longToast(ipaddr.toString())
                 // startActivity<MainActivity>()
 
                 // val items = arrayListOf<Item>(Item())
@@ -51,7 +54,8 @@ class MainActivity : AppCompatActivity() {
                 // i.putParcelableArrayListExtra("extraextra", ArrayList(items))
                 // startActivity(i)
 
-                startActivity<BlubActivity>("lol" to ArrayList(arrayListOf<Item>(Item("ok", 1, "Hm", 2, "Lol"))))
+                startActivity<BlubActivity>("lol" to ArrayList(items))
+                // startActivity<BlubActivity>("lol" to ArrayList(arrayListOf<Item>(Item("ok", 1, "Hm", 2, "Lol"))))
                 // startActivity<BlubActivity>("lol" to ArrayList(arrayListOf<X>(X("yay", 1), X("woop", 2))))
 
                 // startActivity<BlubActivity>()
@@ -61,6 +65,9 @@ class MainActivity : AppCompatActivity() {
 
                 // startActivity(Intent(this@MainActivity, IPActivity::class.java))
                 // sample_text.setText(ipaddr.toString())
+              } else {
+                longToast("Failed ot fetchh...")
+                longToast(err.toString())
               }
             }
           }
