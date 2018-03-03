@@ -40,8 +40,10 @@ class MainActivity : AppCompatActivity() {
               if (null != ipaddr) {
                 longToast(ipaddr.toString())
                 // startActivity<MainActivity>()
-                // startActivity<BlubActivity>()
-                startActivity<IPActivity>("ip" to ipaddr.toString())
+
+                startActivity<BlubActivity>()
+                // startActivity<IPActivity>("ip" to ipaddr.toString())
+
                 // startActivity(Intent(this@MainActivity, IPActivity::class.java))
                 // sample_text.setText(ipaddr.toString())
               }
