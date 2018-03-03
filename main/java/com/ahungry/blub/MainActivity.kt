@@ -51,8 +51,8 @@ class MainActivity : AppCompatActivity() {
                 // i.putParcelableArrayListExtra("extraextra", ArrayList(items))
                 // startActivity(i)
 
-                // startActivity<BlubActivity>("lol" to Item("ok", 1, "Hm", 2, "Lol"))
-                startActivity<BlubActivity>("lol" to ArrayList(arrayListOf<X>(X("yay"), X("woop"))))
+                startActivity<BlubActivity>("lol" to ArrayList(arrayListOf<Item>(Item("ok", 1, "Hm", 2, "Lol"))))
+                // startActivity<BlubActivity>("lol" to ArrayList(arrayListOf<X>(X("yay", 1), X("woop", 2))))
 
                 // startActivity<BlubActivity>()
 

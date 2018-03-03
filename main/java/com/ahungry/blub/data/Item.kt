@@ -9,7 +9,10 @@ import kotlinx.android.parcel.Parcelize
 // See: https://www.kotlindevelopment.com/parcelable-kotlin-android-extensions/
 
 @Parcelize
-data class X (val a: String) : Parcelable {
+data class X (
+    val a: String = "",
+    val b: Int = 0
+) : Parcelable {
   class Deserializer : ResponseDeserializable<X> {
     override fun deserialize(content: String) = Gson().fromJson(content, X::class.java)
   }
@@ -18,9 +21,9 @@ data class X (val a: String) : Parcelable {
 @Parcelize
 data class Item (
     val timeAgo: String = "",
-    val id: Number = 0,
+    val id: Int = 0,
     val seller: String = "",
-    val date: Number = 0,
+    val date: Int = 0,
     val listing: String = ""
 ) : Parcelable {
   /*
