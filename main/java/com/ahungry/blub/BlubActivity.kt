@@ -37,17 +37,23 @@ class BlubActivity : ListActivity() {
     val name: String = fOne.listing
     */
 
-    val eqItems = this.intent.getParcelableArrayListExtra<Item>("lol")
-    val fOne: Item = eqItems[0]
-    val name: String = fOne.listing
+    val eqItems: List<Item> = this.intent.getParcelableArrayListExtra<Item>("lol")
+    // val fOne: Item = eqItems[0]
+    // val name: String = fOne.listing
     // val extras = getIntent().getExtras()
 
+    val items = eqItems.map {
+      "${it.seller} (${it.timeAgo})" to listOf(it.listing)
+    }
+
+    /*
     val items = listOf(
         name to listOf("Woohoo", "Good"),
         "America" to listOf("This is some really long text, I wonder if it will work, hmmm it could be an acution even....", "Canada", "United States"),
         "Asia" to listOf("China", "India", "Japan"),
         "Europe" to listOf("France", "Germany", "Spain", "United Kingdom")
     )
+    */
 
     val listItems = items.flatMap {
       listOf(ContinentItem(it.first)) + it.second.map { CountryItem(it) }
